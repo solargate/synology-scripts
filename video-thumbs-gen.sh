@@ -8,11 +8,8 @@ FFMPEG="ffmpeg7"
 find "$ROOT" -type f \( -iname '*.mp4' -o -iname '*.avi' -o -iname '*.mkv' \) -print0 |
 while IFS= read -r -d '' file; do
   dir=$(dirname "$file")
-  #echo $dir
   base=$(basename "$file")
-  #echo $base
   shot_dir="$dir/@eaDir/$base"
-  #echo $shot_dir
   shot="$shot_dir/SYNOVIDEO_VIDEO_SCREENSHOT.jpg"
 
   if [[ -f "$shot" ]]; then
@@ -21,27 +18,9 @@ while IFS= read -r -d '' file; do
   fi
 
   mkdir -p "$shot_dir"
-
-  #echo "Generating: $shot"
-  #if ! "$FFMPEG" -hide_banner -loglevel error -nostats -nostdin -i "$file" -vf "select=gt(scene\,0.4),scale=640:360" -frames:v 5 -f mjpeg -y "$shot"; then
-  #  echo "Error for file: $file" >&2
-  #fi
-
   echo "Generating: $shot"
   if ! "$FFMPEG" -hide_banner -loglevel error -nostats -nostdin -i "$file" -ss 600 -vframes 1 -f mjpeg -y "$shot"; then
     echo "Error for file: $file" >&2
   fi
-
-  #echo "Generating: $shot"
-  #if ! "$FFMPEG" -hide_banner -loglevel error -nostats -nostdin -i "$file" -vf "select=gt(scene\,0.5)" -vframes 1 -f mjpeg -y "$shot"; then
-  #  echo "Error for file: $file" >&2
-  #fi
-
-  #if ! "$FFMPEG" -hide_banner -loglevel error -nostats -nostdin \
-  #    -i "$file" -vf "select=gt(scene\,0.5)" -vframes 1 -f mjpeg -y "$shot" \
-  #    >"$shot_dir/ffmpeg.out.log" 2>>"$shot_dir/ffmpeg.err.log"; then
-  #  echo "Error for file: $file" >&2
-  #fi
-
 done
 
