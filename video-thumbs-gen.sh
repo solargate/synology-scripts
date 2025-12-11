@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
+# Script for generating video thumbnails for Synology Media Server using FFMPEG
+# The script will find all video files in the specified root directory and subdirectories and generate thumbnails for them
 set -u -o pipefail
 
+# Root directory for video files
 ROOT="/volume1/video"
 
+# FFMPEG executable path
 FFMPEG="ffmpeg7"
 
 find "$ROOT" -type f \( -iname '*.mp4' -o -iname '*.avi' -o -iname '*.mkv' \) -print0 |
@@ -23,4 +27,3 @@ while IFS= read -r -d '' file; do
     echo "Error for file: $file" >&2
   fi
 done
-
