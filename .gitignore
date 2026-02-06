@@ -1,2 +1,6 @@
 # vscode
 .vscode 
+
+# My specific scripts
+backup-folder-*.sh
+
